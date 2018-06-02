@@ -26,7 +26,13 @@ const Progress = styled('span')({
 })
 
 const TaskInput = styled('input', { type: 'text' })(props => ({
-  border: 0
+  border: 0,
+  outline: 'none',
+
+  ':disabled': {
+    background: 'none',
+    border: 0
+  }
 }))
 
 const Task = ({ id, done, disabled, task, progress, sub, onCheck, onChange }) => (
