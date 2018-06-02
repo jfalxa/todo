@@ -53,7 +53,7 @@ export function checkTask({ list, todo, subtask, checked }) {
 
 export function changeTask({ list, todo, subtask, value }) {
   return state => update(state, { list, todo, subtask }, {
-    name: { $set: value }
+    task: { $set: value }
   })
 }
 

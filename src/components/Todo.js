@@ -14,8 +14,9 @@ const Subtasks = ({ done, todos, onCheck, onChange }) => (
       <li key={subtask.id}>
         <Task sub
           task={subtask.task}
-          done={done || subtask.done}
-          onCheck={!done && (checked => onCheck({ subtask, checked }))}
+          done={subtask.done}
+          disabled={done}
+          onCheck={checked => onCheck({ subtask, checked })}
           onChange={value => onChange({ subtask, value })}
         />
       </li>
@@ -33,8 +34,9 @@ function count(subtasks) {
 const Todo = ({ todo, onCheck, onChange }) => (
   <li>
     <Task
-      task={`${todo.task} ${count(todo.subtasks)}` }
+      task={todo.task}
       done={todo.done}
+      progress={count(todo.subtasks)}
       onCheck={checked => onCheck({ todo, checked })}
       onChange={value => onChange({ todo, value })}
     />

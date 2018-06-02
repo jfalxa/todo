@@ -3,32 +3,47 @@ import styled, { colors } from '../style'
 
 const Container = styled('div')(props => ({
   flexDirection: 'row',
-  alignItems: 'center',
+  alignItems: 'baseline',
+  marginBottom: '6px',
+
   color: props.done ? colors.secondary : colors.primary,
-  fontSize: props.sub ? '12px' : '16px',
-  textDecoration: props.done ? 'line-through' : 'none'
+  fontSize: props.sub ? '15px' : '21px',
+
+  input: {
+    fontSize: props.sub ? '15px' : '21px',
+    color: props.done ? colors.secondary : colors.primary,
+    textDecoration: props.done ? 'line-through' : 'none'
+  }
 }))
 
-function onClick(onCheck) {
-  return e => {
-    if (!onCheck) {
-      return e.preventDefault()
-    }
+const Checkbox = styled('input', { type: 'checkbox' })({
+  margin: 0,
+  marginRight: '9px'
+})
 
-    return onCheck(e.target.checked)
-  }
-}
+const Progress = styled('span')({
+  marginRight: '9px'
+})
 
-const Task = ({ id, done, task, sub, onCheck }) => (
+const TaskInput = styled('input', { type: 'text' })(props => ({
+  border: 0
+}))
+
+const Task = ({ id, done, disabled, task, progress, sub, onCheck, onChange }) => (
   <Container done={done} sub={sub}>
-    <input
-      type="checkbox"
+    <Checkbox
       checked={done}
-      onclick={onClick(onCheck)}
+      disabled={disabled}
+      onclick={e => onCheck(e.target.checked)}
     />
-    <label>
-      {task}
-    </label>
+
+    {progress && <Progress>{progress}</Progress>}
+
+    <TaskInput
+      value={task}
+      disabled={disabled || done}
+      onchange={e => onChange(e.target.value)}
+    />
   </Container>
 )
 
