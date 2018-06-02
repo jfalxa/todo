@@ -2,6 +2,7 @@ import { h } from 'hyperapp'
 import { Link } from '@hyperapp/router'
 import styled from '../style'
 import withNav from '../utils/withNav'
+import { Title } from './Text'
 
 const ItemContainer = styled('li')({
   marginBottom: '18px',
@@ -18,7 +19,7 @@ const ItemLabel = withNav(styled(Link)(props => ({
   background: props.active ? '#DDD' : null,
 
   ':hover': {
-    background: '#EEE'
+    background: props.to ? '#EEE' : null
   }
 })))
 
@@ -47,11 +48,16 @@ const MenuContainer = styled('div')({
   borderRight: '1px solid #EEE'
 })
 
+const AppTitle = styled(Title)({
+  marginLeft: '9px'
+})
+
 const Menu = ({ lists }) => (
   <MenuContainer>
+    <AppTitle>[L]</AppTitle>
     <ItemList>
-      <Item to="/" label="Focus" />
-      <Item to="/lists" label="Lists">
+      <Item to="/" label="Focus"/>
+      <Item label="Lists">
         <SubItem to="/lists/salut" label="Salut" />
         <SubItem to="/lists/voila" label="Voila." />
         <SubItem to="/lists/muy" label="Muuuuuuuy" />

@@ -6,7 +6,14 @@ import actions from './actions'
 
 
 const initialState = {
-  todo: { lists: [] },
+  todo: { lists: [
+    { name: 'salut', todos: [
+      { done: false, task: 'salut les copains', subtasks: [
+        { done: false, task: 'couper du bois' },
+        { done: true, task: 'danser la salsa javanaise' }
+      ] }
+    ] }
+  ] },
   location: location.state
 }
 

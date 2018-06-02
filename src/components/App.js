@@ -4,7 +4,7 @@ import { Switch, Route } from '@hyperapp/router'
 import Root from './Root'
 import Menu from './Menu'
 import Focus from './Focus'
-import List from './List'
+import TodoList from './TodoList'
 import styled from '../style'
 
 
@@ -14,7 +14,7 @@ const App = () => (
 
     <Switch>
       <Route path="/" render={Focus} />
-      <Route path="/list/:list" render={List} />
+      <Route path="/lists/:list" render={TodoList} />
     </Switch>
   </Root>
 )
