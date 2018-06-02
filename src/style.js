@@ -14,7 +14,7 @@ export default function styled(Component, attrs) {
     const StyledComponent = picostyled(Component)(style)
 
     return attrs
-      ? props => <StyledComponent {...attrs} {...props} />
+      ? (props, children) => <StyledComponent {...attrs} {...props}>{children}</StyledComponent>
       : StyledComponent
   }
 }

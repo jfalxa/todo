@@ -1,11 +1,20 @@
 import { h } from 'hyperapp'
 import Task from './Task'
 import styled from '../style'
+import { reverse } from '../utils/helpers'
+
+const Container = styled('li')({
+  marginBottom: '12px',
+
+  ':focus': {
+    background: 'red'
+  }
+})
 
 const SubtaskContainer = styled('ul')({
   padding: 0,
   margin: 0,
-  marginLeft: '21px'
+  marginLeft: '21px',
 })
 
 const Subtasks = ({ done, todos, onCheck, onChange }) => (
@@ -24,15 +33,27 @@ const Subtasks = ({ done, todos, onCheck, onChange }) => (
   </SubtaskContainer>
 )
 
+const TaskInput = styled('input', { type: 'text' })(props => ({
+  border: 0,
+  outline: 'none',
+
+  ':disabled': {
+    background: 'none',
+    border: 0
+  }
+}))
+
 function count(subtasks) {
   const total = subtasks.length
   const done = subtasks.filter(subtask => subtask.done).length
 
-  return `(${done}/${total})`
+  return (total > 0)
+    ? `(${done}/${total})`
+    : null
 }
 
-const Todo = ({ todo, onCheck, onChange }) => (
-  <li>
+const Todo = ({ todo, onAdd, onCheck, onChange }) => (
+  <Container>
     <Task
       task={todo.task}
       done={todo.done}
@@ -49,7 +70,14 @@ const Todo = ({ todo, onCheck, onChange }) => (
         onChange={args => onChange({ todo, ...args })}
       />
     )}
-  </li>
+
+    <TaskInput
+      value=""
+      placeholder="+"
+      style={{ marginLeft: '21px' }}
+      onchange={e => onAdd({ todo, subtask: { task: e.target.value } })}
+    />
+  </Container>
 )
 
 export default Todo

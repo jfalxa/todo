@@ -1,11 +1,13 @@
 import { h } from 'hyperapp'
 import { Redirect } from '@hyperapp/router'
+import { reverse } from '../utils/helpers'
 import connect from '../utils/connect'
 import styled from '../style'
 import Todo from './Todo'
+import TaskInput from './TaskInput'
 import { Title } from './Text'
 
-const TodoListContainer = styled('section')({
+const TodoListContainer = styled('div')({
   padding: '0 9px'
 })
 
@@ -14,15 +16,29 @@ const ListContainer = styled('ul')({
   margin: 0
 })
 
-export const TodoList = ({ list, onCheck, onChange }) => (
+const TodoInput = styled(TaskInput)({
+  marginBottom: '21px',
+  fontSize: '18px'
+})
+
+export const TodoList = ({ list, onAdd, onCheck, onChange }) => (
   <TodoListContainer>
-    <Title>{list.name}</Title>
+    <Title underline>{list.name}</Title>
+
+    {onAdd && (
+      <TodoInput
+        value=""
+        placeholder="+ Add a new task"
+        onchange={e => onAdd({ todo: { task: e.target.value } })}
+      />
+    )}
 
     <ListContainer>
-      {list.todos.map((todo, i) => (
+      {reverse(list.todos).map((todo, i) => (
         <Todo
           key={i}
           todo={todo}
+          onAdd={onAdd}
           onCheck={onCheck}
           onChange={onChange}
         />
@@ -34,10 +50,11 @@ export const TodoList = ({ list, onCheck, onChange }) => (
 function selector(state, actions, props) {
   const list = state.todo.lists.find(list => list.name === props.match.params.list)
 
+  const onAdd = args => actions.todo.addTask({ list, ...args })
   const onCheck = args => actions.todo.checkTask({ list, ...args })
   const onChange = args => actions.todo.changeTask({ list, ...args })
 
-  return { list, onCheck, onChange }
+  return { list, onAdd, onCheck, onChange }
 }
 
 export default connect(selector)(props => (

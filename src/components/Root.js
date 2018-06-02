@@ -19,7 +19,8 @@ const Root = styled('div')({
   'null, body *': {
     display: 'flex',
     boxSizing: 'border-box',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    fontFamily: 'serif'
   }
 
 })

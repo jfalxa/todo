@@ -29,16 +29,20 @@ export function createList({ list }) {
   })
 }
 
-export function addTodo({ list, todo }) {
-  return state => update(state, { list, todo }, {
-    todos: { $push: [Task.create(todo)] }
-  })
+export function addTask({ list, todo, subtask }) {
+  const args = Boolean(subtask)
+    ? [{ list, todo }, { subtasks: { $push: [Task.create(subtask)] } }]
+    : [{ list }, { todos: { $push: [Task.create(todo)] } }]
+
+  return state => update(state, ...args)
 }
 
-export function addSubtask({ list, todo, subtask }) {
-  return state => update(state, { list, todo }, {
-    subtasks: { $push: [Task.create(subtask)] }
-  })
+export function removeTask({ list, todo, subtask }) {
+  const args = Boolean(subtask)
+    ? [{ list, todo }, { subtasks: { $splice: [[todo.subtasks.indexOf(subtask), 1]] } }]
+    : [{ list }, { todos: { $splice: [[list.todos.indexOf(todo), 1]] } }]
+
+  return state => update(state, ...args)
 }
 
 export function checkTask({ list, todo, subtask, checked }) {
@@ -52,8 +56,8 @@ export function checkTask({ list, todo, subtask, checked }) {
 }
 
 export function changeTask({ list, todo, subtask, value }) {
-  return state => update(state, { list, todo, subtask }, {
-    task: { $set: value }
-  })
+  return (value.length > 0)
+    ? state => update(state, { list, todo, subtask }, {})
+    : removeTask({ list, todo, subtask })
 }
 
