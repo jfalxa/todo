@@ -14,8 +14,7 @@ const ListContainer = styled('ul')({
   margin: 0
 })
 
-
-export const TodoList = ({ list, onCheck, onCheckSubtask, onChange, onChangeSubtask }) => (
+export const TodoList = ({ list, onCheck, onChange }) => (
   <TodoListContainer>
     <Title>{list.name}</Title>
 
@@ -25,9 +24,7 @@ export const TodoList = ({ list, onCheck, onCheckSubtask, onChange, onChangeSubt
           key={i}
           todo={todo}
           onCheck={onCheck}
-          onCheckSubtask={onCheckSubtask}
           onChange={onChange}
-          onChangeSubtask={onChangeSubtask}
         />
       ))}
     </ListContainer>
@@ -37,12 +34,10 @@ export const TodoList = ({ list, onCheck, onCheckSubtask, onChange, onChangeSubt
 function selector(state, actions, props) {
   const list = state.todo.lists.find(list => list.name === props.match.params.list)
 
-  const onCheck = args => actions.todo.checkTodo({ list, ...args })
-  const onCheckSubtask = args => actions.todo.checkSubtask({ list, ...args })
-  const onChange = args => actions.todo.changeTodo({ list, ...args })
-  const onChangeSubtask = args => actions.todo.changeSubtask({ list, ...args })
+  const onCheck = args => actions.todo.checkTask({ list, ...args })
+  const onChange = args => actions.todo.changeTask({ list, ...args })
 
-  return { list, onCheck, onCheckSubtask, onChange, onChangeSubtask }
+  return { list, onCheck, onChange }
 }
 
 export default connect(selector)(props => (

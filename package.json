@@ -17,6 +17,7 @@
     "@hyperapp/router": "^0.7.0",
     "hyperapp": "^1.2.5",
     "immutability-helper": "^2.7.0",
+    "lodash": "^4.17.10",
     "picostyle": "github:jfalxa/picostyle"
   }
 }

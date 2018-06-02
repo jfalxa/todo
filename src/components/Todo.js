@@ -8,14 +8,14 @@ const SubtaskContainer = styled('ul')({
   marginLeft: '21px'
 })
 
-const Subtasks = ({ todos, onCheck, onChange }) => (
+const Subtasks = ({ done, todos, onCheck, onChange }) => (
   <SubtaskContainer>
     {todos.map((subtask, i) => (
       <li key={subtask.id}>
         <Task sub
           task={subtask.task}
-          done={subtask.done}
-          onCheck={checked => onCheck({ subtask, checked })}
+          done={done || subtask.done}
+          onCheck={!done && (checked => onCheck({ subtask, checked }))}
           onChange={value => onChange({ subtask, value })}
         />
       </li>
@@ -30,7 +30,7 @@ function count(subtasks) {
   return `(${done}/${total})`
 }
 
-const Todo = ({ todo, onCheck, onCheckSubtask, onChange, onChangeSubtask }) => (
+const Todo = ({ todo, onCheck, onChange }) => (
   <li>
     <Task
       task={`${todo.task} ${count(todo.subtasks)}` }
@@ -41,9 +41,10 @@ const Todo = ({ todo, onCheck, onCheckSubtask, onChange, onChangeSubtask }) => (
 
     {(todo.subtasks && todo.subtasks.length > 0) && (
       <Subtasks
+        done={todo.done}
         todos={todo.subtasks}
-        onCheck={args => onCheckSubtask({ todo, ...args })}
-        onChange={args => onChangeSubtask({ todo, ...args })}
+        onCheck={args => onCheck({ todo, ...args })}
+        onChange={args => onChange({ todo, ...args })}
       />
     )}
   </li>

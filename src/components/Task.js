@@ -9,12 +9,22 @@ const Container = styled('div')(props => ({
   textDecoration: props.done ? 'line-through' : 'none'
 }))
 
+function onClick(onCheck) {
+  return e => {
+    if (!onCheck) {
+      return e.preventDefault()
+    }
+
+    return onCheck(e.target.checked)
+  }
+}
+
 const Task = ({ id, done, task, sub, onCheck }) => (
   <Container done={done} sub={sub}>
     <input
       type="checkbox"
       checked={done}
-      onchange={e => onCheck(e.target.checked)}
+      onclick={onClick(onCheck)}
     />
     <label>
       {task}
