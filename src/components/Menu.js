@@ -44,6 +44,7 @@ const SubItem = styled(Item, { sub: true })({
 
 const MenuContainer = styled('div')({
   width: '180px',
+  marginTop: '9px',
   borderRight: '1px solid #EEE'
 })
 
@@ -57,10 +58,10 @@ const Menu = ({ lists }) => (
     <ItemList>
       <Item to="/" label="Focus"/>
       <Item label="Lists">
-        <SubItem to="/lists/salut" label="Salut" />
-        <SubItem to="/lists/voila" label="Voila." />
-        <SubItem to="/lists/muy" label="Muuuuuuuy" />
-        <SubItem to="/lists/allez" label="Allez, allez" />
+        <SubItem to="/salut" label="Salut" />
+        <SubItem to="/voila" label="Voila." />
+        <SubItem to="/muy" label="Muuuuuuuy" />
+        <SubItem to="/allez" label="Allez, allez" />
       </Item>
     </ItemList>
   </MenuContainer>

@@ -17,14 +17,15 @@ const SubtaskContainer = styled('ul')({
   marginLeft: '21px',
 })
 
-const Subtasks = ({ done, todos, onCheck, onChange }) => (
+const Subtasks = ({ done, todos, onAdd, onCheck, onChange }) => (
   <SubtaskContainer>
     {todos.map((subtask, i) => (
-      <li key={subtask.id}>
+      <li key={i}>
         <Task sub
           task={subtask.task}
           done={subtask.done}
           disabled={done}
+          onAdd={() => onAdd({ subtask: '' })}
           onCheck={checked => onCheck({ subtask, checked })}
           onChange={value => onChange({ subtask, value })}
         />
@@ -58,6 +59,7 @@ const Todo = ({ todo, onAdd, onCheck, onChange }) => (
       task={todo.task}
       done={todo.done}
       progress={count(todo.subtasks)}
+      onAdd={() => onAdd({ todo, subtask: '' })}
       onCheck={checked => onCheck({ todo, checked })}
       onChange={value => onChange({ todo, value })}
     />
@@ -66,17 +68,11 @@ const Todo = ({ todo, onAdd, onCheck, onChange }) => (
       <Subtasks
         done={todo.done}
         todos={todo.subtasks}
+        onAdd={args => onAdd({ todo, ...args })}
         onCheck={args => onCheck({ todo, ...args })}
         onChange={args => onChange({ todo, ...args })}
       />
     )}
-
-    <TaskInput
-      value=""
-      placeholder="+"
-      style={{ marginLeft: '21px' }}
-      onchange={e => onAdd({ todo, subtask: { task: e.target.value } })}
-    />
   </Container>
 )
 

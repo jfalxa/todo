@@ -30,9 +30,10 @@ export function createList({ list }) {
 }
 
 export function addTask({ list, todo, subtask }) {
-  const args = Boolean(subtask)
-    ? [{ list, todo }, { subtasks: { $push: [Task.create(subtask)] } }]
+  const args = (typeof subtask === 'string')
+    ? [{ list, todo }, { subtasks: { $push: [Task.create(subtask, true)] } }]
     : [{ list }, { todos: { $push: [Task.create(todo)] } }]
+
 
   return state => update(state, ...args)
 }
@@ -57,7 +58,7 @@ export function checkTask({ list, todo, subtask, checked }) {
 
 export function changeTask({ list, todo, subtask, value }) {
   return (value.length > 0)
-    ? state => update(state, { list, todo, subtask }, {})
+    ? state => update(state, { list, todo, subtask }, { task: { $set: value } })
     : removeTask({ list, todo, subtask })
 }
 

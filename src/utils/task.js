@@ -1,6 +1,9 @@
-let uid = 0
-
 export function create(task, sub) {
-  const created = { ...task, done: false, id: uid++ }
+  const created = {
+    done: false,
+    task: task.trim(),
+    createdAt: Date.now()
+  }
+
   return sub ? created : { ...created, subtasks: [] }
 }

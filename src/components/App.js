@@ -14,7 +14,7 @@ const App = () => (
 
     <Switch>
       <Route path="/" render={Focus} />
-      <Route path="/lists/:list" render={TodoList} />
+      <Route path="/:list" render={TodoList} />
     </Switch>
   </Root>
 )

@@ -8,10 +8,11 @@ const Container = styled('div')(props => ({
   marginBottom: props.sub ? '6px' : null,
 
   color: props.done ? colors.secondary : colors.primary,
-  fontSize: '18px',
+  fontSize: '15px',
 
-  input: {
-    fontSize: props.sub ? '15px' : '21px',
+  'input[type=text]': {
+    flex: 1,
+    fontSize: props.sub ? '15px' : '18px',
     fontWeight: props.sub ? 'normal' : 'bold',
     color: props.done ? colors.secondary : colors.primary,
     textDecoration: props.done ? 'line-through' : 'none'
@@ -28,7 +29,15 @@ const Progress = styled('span')({
   marginRight: '9px'
 })
 
-const Task = ({ id, done, disabled, task, progress, sub, onCheck, onChange }) => (
+function onEnter(callback) {
+  return e => {
+    if (e.key === 'Enter' ) {
+      callback()
+    }
+  }
+}
+
+const Task = ({ id, done, disabled, task, progress, sub, onAdd, onCheck, onChange }) => (
   <Container done={done} sub={sub}>
     <Checkbox
       checked={done}
@@ -42,6 +51,8 @@ const Task = ({ id, done, disabled, task, progress, sub, onCheck, onChange }) =>
       value={task}
       disabled={disabled || done}
       onchange={e => onChange(e.target.value)}
+      onblur={e => onChange(e.target.value)}
+      onkeyup={onEnter(onAdd)}
     />
   </Container>
 )

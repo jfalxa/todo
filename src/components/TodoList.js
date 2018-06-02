@@ -8,7 +8,9 @@ import TaskInput from './TaskInput'
 import { Title } from './Text'
 
 const TodoListContainer = styled('div')({
-  padding: '0 9px'
+  flex: 1,
+  padding: '9px',
+  overflowY: 'scroll'
 })
 
 const ListContainer = styled('ul')({
@@ -29,7 +31,7 @@ export const TodoList = ({ list, onAdd, onCheck, onChange }) => (
       <TodoInput
         value=""
         placeholder="+ Add a new task"
-        onchange={e => onAdd({ todo: { task: e.target.value } })}
+        onchange={e => onAdd({ todo: e.target.value })}
       />
     )}
 

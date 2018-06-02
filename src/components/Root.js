@@ -6,7 +6,6 @@ const Root = styled('div')({
 
   flexDirection: 'row',
   height: '100%',
-  marginTop: '9px',
   userSelect: 'none',
 
   'null, html, body': {
@@ -20,6 +19,7 @@ const Root = styled('div')({
     display: 'flex',
     boxSizing: 'border-box',
     flexDirection: 'column',
+    flexShrink: 0,
     fontFamily: 'serif'
   }
 
