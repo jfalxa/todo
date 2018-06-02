@@ -1,22 +1,64 @@
 import { h } from 'hyperapp'
 import { Link } from '@hyperapp/router'
 import styled from '../style'
+import withNav from '../utils/withNav'
 
-
-const Container = styled('div')({
-  flexDirection: 'column'
+const ItemContainer = styled('li')({
+  marginBottom: '18px',
+  fontSize: '18px',
+  fontWeight: 'bold',
 })
 
+const ItemLabel = withNav(styled(Link)(props => ({
+  height: props.sub ? '27px' : '32px',
+  paddingLeft: props.sub ? '18px' : '9px',
+  paddingRight: '9px',
+  lineHeight: props.sub ? '27px' : '32px',
+  textDecoration: 'none',
+  background: props.active ? '#DDD' : null,
 
-const Menu = ({ lists }) => (
-  <div>
-    <span>Focus</span>
-    <Link to="/">Focus</Link>
+  ':hover': {
+    background: '#EEE'
+  }
+})))
 
-    <span>Lists</span>
-    <Link to="/list/salut">Salut</Link>
-  </div>
+const ItemList = styled('ul')(props => ({
+  padding: 0,
+  margin: 0
+}))
+
+const Item = ({ to, label, sub, class:cs }, children) => (
+  <ItemContainer class={cs}>
+    <ItemLabel to={to} sub={sub}>{label}</ItemLabel>
+    {children && children.length > 0 && (
+      <ItemList pad>{children}</ItemList>
+    )}
+  </ItemContainer>
 )
 
+const SubItem = styled(Item, { sub: true })({
+  marginBottom: 0,
+  fontSize: '15px',
+  fontWeight: 'normal'
+})
+
+const MenuContainer = styled('div')({
+  width: '180px',
+  borderRight: '1px solid #EEE'
+})
+
+const Menu = ({ lists }) => (
+  <MenuContainer>
+    <ItemList>
+      <Item to="/" label="Focus" />
+      <Item to="/lists" label="Lists">
+        <SubItem to="/lists/salut" label="Salut" />
+        <SubItem to="/lists/voila" label="Voila." />
+        <SubItem to="/lists/muy" label="Muuuuuuuy" />
+        <SubItem to="/lists/allez" label="Allez, allez" />
+      </Item>
+    </ItemList>
+  </MenuContainer>
+)
 
 export default Menu

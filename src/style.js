@@ -7,4 +7,15 @@ const colors = {
   background: 'white'
 }
 
-export default pico(h)
+const picostyled = pico(h)
+
+
+export default function styled(Component, attrs) {
+  return style => {
+    const StyledComponent = picostyled(Component)(style)
+
+    return attrs
+      ? props => <StyledComponent {...attrs} {...props} />
+      : StyledComponent
+  }
+}

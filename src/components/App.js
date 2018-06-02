@@ -5,7 +5,7 @@ import Root from './Root'
 import Menu from './Menu'
 import Focus from './Focus'
 import List from './List'
-import styled from '../utils/styled'
+import styled from '../style'
 
 
 const App = () => (
