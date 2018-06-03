@@ -1,6 +1,9 @@
 import { h } from 'hyperapp'
 import styled from '../style'
 
+export const Text = styled('span')(props => ({
+  fontSize: '18px'
+}))
 
 export const Title = styled('h1')(props => ({
   marginTop: 0,

@@ -2,11 +2,14 @@ import { h } from 'hyperapp'
 import styled from '../style'
 import connect from '../utils/connect'
 import { TodoList } from './TodoList'
-import { Title } from './Text'
+import { Text, Title } from './Text'
 import Page from './Page'
+
 
 const Focus = ({ lists, onAdd, onCheck, onChange, onFocus }) => (
   <Page>
+    {(lists.length === 0) && <Text>No focused task yet!</Text>}
+
     {lists.map((list, i) => (
       <TodoList
         key={i}
