@@ -1,8 +1,10 @@
 import { h } from 'hyperapp'
 import { Link } from '@hyperapp/router'
+import slug from 'lodash/kebabCase'
 import styled from '../style'
 import withNav from '../utils/withNav'
 import { Title } from './Text'
+
 
 const ItemContainer = styled('li')({
   marginBottom: '18px',
@@ -11,6 +13,8 @@ const ItemContainer = styled('li')({
 })
 
 const ItemLabel = withNav(styled(Link)(props => ({
+  flexDirection: 'row',
+  justifyContent: 'space-between',
   height: props.sub ? '27px' : '32px',
   paddingLeft: props.sub ? '18px' : '9px',
   paddingRight: '9px',
@@ -28,9 +32,9 @@ const ItemList = styled('ul')(props => ({
   margin: 0
 }))
 
-const Item = ({ to, label, sub, class:cs }, children) => (
+const Item = ({ to, label, sub, action, class:cs }, children) => (
   <ItemContainer class={cs}>
-    <ItemLabel to={to} sub={sub}>{label}</ItemLabel>
+    <ItemLabel to={to} sub={sub}>{label} {action}</ItemLabel>
     {children && children.length > 0 && (
       <ItemList pad>{children}</ItemList>
     )}
@@ -53,16 +57,33 @@ const AppTitle = styled(Title)({
   marginLeft: '9px'
 })
 
-const Menu = ({ lists }) => (
+const Glyph = styled('p')({
+  margin: 0,
+  padding: 0,
+  fontSize: '21px',
+  fontWeight: 'bold',
+  cursor: 'pointer'
+})
+
+function onCreateList(createList) {
+  return e => {
+    const list = prompt('Please enter a name for the new list')
+    createList({ list })
+  }
+}
+
+const Menu = ({ lists, onList }) => (
   <MenuContainer>
     <AppTitle>[L]</AppTitle>
     <ItemList>
       <Item to="/" label="Focus"/>
-      <Item label="Lists">
-        <SubItem to="/salut" label="Salut" />
-        <SubItem to="/voila" label="Voila." />
-        <SubItem to="/muy" label="Muuuuuuuy" />
-        <SubItem to="/allez" label="Allez, allez" />
+      <Item
+        label="Lists"
+        action={<Glyph onclick={onCreateList(onList)}>+</Glyph>}
+      >
+        {lists.map((list, i) => (
+          <SubItem to={slug(list.name)} label={list.name} />
+        ))}
       </Item>
     </ItemList>
   </MenuContainer>

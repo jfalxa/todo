@@ -1,16 +1,16 @@
 import { h } from 'hyperapp'
 import { Redirect } from '@hyperapp/router'
+import slug from 'lodash/kebabCase'
 import { reverse } from '../utils/helpers'
 import connect from '../utils/connect'
 import styled from '../style'
 import Todo from './Todo'
 import TaskInput from './TaskInput'
 import { Title } from './Text'
+import Page from './Page'
 
 const TodoListContainer = styled('div')({
-  flex: 1,
-  padding: '9px',
-  overflowY: 'scroll'
+  marginBottom: '27px'
 })
 
 const ListContainer = styled('ul')({
@@ -23,11 +23,11 @@ const TodoInput = styled(TaskInput)({
   fontSize: '18px'
 })
 
-export const TodoList = ({ list, onAdd, onCheck, onChange }) => (
+export const TodoList = ({ list, add, onAdd, onCheck, onChange, onFocus }) => (
   <TodoListContainer>
     <Title underline>{list.name}</Title>
 
-    {onAdd && (
+    {add && (
       <TodoInput
         value=""
         placeholder="+ Add a new task"
@@ -43,25 +43,29 @@ export const TodoList = ({ list, onAdd, onCheck, onChange }) => (
           onAdd={onAdd}
           onCheck={onCheck}
           onChange={onChange}
+          onFocus={onFocus}
         />
       ))}
     </ListContainer>
   </TodoListContainer>
 )
 
+
 function selector(state, actions, props) {
-  const list = state.todo.lists.find(list => list.name === props.match.params.list)
+  const list = state.todo.lists
+    .find(list => props.match.params.list === slug(list.name))
 
   const onAdd = args => actions.todo.addTask({ list, ...args })
   const onCheck = args => actions.todo.checkTask({ list, ...args })
   const onChange = args => actions.todo.changeTask({ list, ...args })
+  const onFocus = args => actions.todo.focusTask({ list, ...args })
 
-  return { list, onAdd, onCheck, onChange }
+  return { add: true, list, onAdd, onCheck, onChange, onFocus }
 }
 
 export default connect(selector)(props => (
   props.list
-    ? <TodoList {...props} />
+    ? <Page><TodoList {...props} /></Page>
     : <Redirect to="/" />
 ))
 

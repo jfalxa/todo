@@ -6,15 +6,15 @@ import { reverse } from '../utils/helpers'
 const Container = styled('li')({
   marginBottom: '12px',
 
-  ':focus': {
-    background: 'red'
+  ':hover .focus': {
+    opacity: 1
   }
 })
 
 const SubtaskContainer = styled('ul')({
   padding: 0,
   margin: 0,
-  marginLeft: '21px',
+  marginLeft: '48px',
 })
 
 const Subtasks = ({ done, todos, onAdd, onCheck, onChange }) => (
@@ -53,15 +53,17 @@ function count(subtasks) {
     : null
 }
 
-const Todo = ({ todo, onAdd, onCheck, onChange }) => (
+const Todo = ({ todo, onAdd, onCheck, onChange, onFocus }) => (
   <Container>
     <Task
       task={todo.task}
       done={todo.done}
+      focused={todo.focused}
       progress={count(todo.subtasks)}
       onAdd={() => onAdd({ todo, subtask: '' })}
       onCheck={checked => onCheck({ todo, checked })}
       onChange={value => onChange({ todo, value })}
+      onFocus={() => onFocus({ todo })}
     />
 
     {(todo.subtasks && todo.subtasks.length > 0) && (

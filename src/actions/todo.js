@@ -1,9 +1,10 @@
 import set from 'lodash/set'
 import immutableUpdate from 'immutability-helper'
-import * as Task from '../utils/task'
+import List from '../models/List'
+import Task from '../models/Task'
 
 function update(state, { list, todo, subtask }, command) {
-  const listIndex = list ? state.lists.indexOf(list) : -1
+  const listIndex = list ? state.lists.findIndex(candidate => candidate.name === list.name) : -1
   const todoIndex = todo ? state.lists[listIndex].todos.indexOf(todo) : -1
   const subtaskIndex = subtask ? state.lists[listIndex].todos[todoIndex].subtasks.indexOf(subtask) : -1
 
@@ -25,14 +26,14 @@ function checkAll(tasks, checked) {
 
 export function createList({ list }) {
   return state => immutableUpdate(state, {
-    lists: { $push: [list] }
+    lists: { $push: [List(list)] }
   })
 }
 
 export function addTask({ list, todo, subtask }) {
   const args = (typeof subtask === 'string')
-    ? [{ list, todo }, { subtasks: { $push: [Task.create(subtask, true)] } }]
-    : [{ list }, { todos: { $push: [Task.create(todo)] } }]
+    ? [{ list, todo }, { subtasks: { $push: [Task(subtask, true)] } }]
+    : [{ list }, { todos: { $push: [Task(todo)] } }]
 
 
   return state => update(state, ...args)
@@ -62,3 +63,8 @@ export function changeTask({ list, todo, subtask, value }) {
     : removeTask({ list, todo, subtask })
 }
 
+export function focusTask({ list, todo }) {
+  return state => update(state, { list, todo }, {
+    $toggle: ['focused']
+  })
+}

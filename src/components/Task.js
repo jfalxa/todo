@@ -5,7 +5,7 @@ import TaskInput from './TaskInput'
 const Container = styled('div')(props => ({
   flexDirection: 'row',
   alignItems: 'center',
-  marginBottom: props.sub ? '6px' : null,
+  marginBottom: '6px',
 
   color: props.done ? colors.secondary : colors.primary,
   fontSize: '15px',
@@ -29,6 +29,17 @@ const Progress = styled('span')({
   marginRight: '9px'
 })
 
+const FocusContainer = styled('span', { class: 'focus' })(props => ({
+  opacity: props.focused ? 1 : 0,
+  marginRight: '9px'
+}))
+
+const Focus = ({ focused, onFocus }) => (
+  <FocusContainer focused={focused} onclick={onFocus}>
+    {focused ? '★' : '☆'}
+  </FocusContainer>
+)
+
 function onEnter(callback) {
   return e => {
     if (e.key === 'Enter' ) {
@@ -37,8 +48,10 @@ function onEnter(callback) {
   }
 }
 
-const Task = ({ id, done, disabled, task, progress, sub, onAdd, onCheck, onChange }) => (
+const Task = ({ id, done, focused, disabled, task, progress, sub, onAdd, onCheck, onChange, onFocus }) => (
   <Container done={done} sub={sub}>
+    {!sub && <Focus focused={focused} onFocus={onFocus}/>}
+
     <Checkbox
       checked={done}
       disabled={disabled}

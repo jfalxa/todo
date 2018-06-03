@@ -8,9 +8,12 @@ import TodoList from './TodoList'
 import styled from '../style'
 
 
-const App = () => (
+const App = (state, actions) => (
   <Root>
-    <Menu />
+    <Menu
+      lists={state.todo.lists}
+      onList={actions.todo.createList}
+    />
 
     <Switch>
       <Route path="/" render={Focus} />
