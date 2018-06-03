@@ -6,21 +6,12 @@ import persist from './utils/persist'
 import actions from './actions'
 
 
-const enhancedApp = persist(app, 'l-todos', ({ todo }) => ({ todo }))
-
-
 const initialState = {
-  todo: { lists: [
-    { name: 'salut', todos: [
-      { done: false, task: 'salut les copains', subtasks: [
-        { done: false, task: 'couper du bois' },
-        { done: true, task: 'danser la salsa javanaise' }
-      ] }
-    ] }
-  ] },
+  todo: { lists: [] },
   location: location.state
 }
 
+const enhancedApp = persist(app, 'l-todos', ({ todo }) => ({ todo }))
 const main = enhancedApp(initialState, actions, App, document.body)
 const unsubscribe = location.subscribe(main.location)
 

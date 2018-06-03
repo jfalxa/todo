@@ -82,7 +82,7 @@ const Menu = ({ lists, onList }) => (
         action={<Glyph onclick={onCreateList(onList)}>+</Glyph>}
       >
         {lists.map((list, i) => (
-          <SubItem to={slug(list.name)} label={list.name} />
+          <SubItem to={'/' + slug(list.name)} label={list.name} />
         ))}
       </Item>
     </ItemList>
