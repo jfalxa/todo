@@ -7,12 +7,13 @@ import { Title } from './Text'
 const ItemContainer = styled('li')({
   marginBottom: '18px',
   fontSize: '18px',
-  fontWeight: 'bold',
+  fontWeight: 'bold'
 })
 
 const ItemLabel = withNav(styled(Link)(props => ({
   height: props.sub ? '27px' : '32px',
-  paddingLeft: props.sub ? '18px' : '9px', paddingRight: '9px',
+  paddingLeft: props.sub ? '18px' : '9px',
+  paddingRight: '9px',
   lineHeight: props.sub ? '27px' : '32px',
   textDecoration: 'none',
   background: props.active ? '#DDD' : null,
