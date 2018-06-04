@@ -2,7 +2,7 @@ import { h } from 'hyperapp'
 import styled, { colors } from '../style'
 import TaskInput from './TaskInput'
 
-const Container = styled('div')(props => ({
+const Container = styled('div', 'task')(props => ({
   flexDirection: 'row',
   alignItems: 'center',
   marginBottom: '6px',
@@ -19,17 +19,17 @@ const Container = styled('div')(props => ({
   }
 }))
 
-const Checkbox = styled('input', { type: 'checkbox' })({
+const Checkbox = styled('input', 'task-check', { type: 'checkbox' })({
   margin: 0,
   marginTop: '3px',
   marginRight: '9px'
 })
 
-const Progress = styled('span')({
+const Progress = styled('span', 'task-progress')({
   marginRight: '9px'
 })
 
-const FocusContainer = styled('span', { class: 'focus' })(props => ({
+const FocusContainer = styled('span', 'task-focus')(props => ({
   opacity: props.focused ? 1 : 0,
   marginRight: '9px'
 }))

@@ -2,7 +2,7 @@ import { h } from 'hyperapp'
 import styled from '../style'
 
 
-const Root = styled('div')({
+const Root = styled('div', 'root')({
 
   flexDirection: 'row',
   height: '100%',

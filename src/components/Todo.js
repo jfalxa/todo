@@ -3,15 +3,15 @@ import Task from './Task'
 import styled from '../style'
 import { reverse } from '../utils/helpers'
 
-const Container = styled('li')({
+const Container = styled('li', 'todo')({
   marginBottom: '12px',
 
-  ':hover .focus': {
+  ':hover .task-focus': {
     opacity: 1
   }
 })
 
-const SubtaskContainer = styled('ul')({
+const SubtaskContainer = styled('ul', 'todo-subtasks')({
   padding: 0,
   margin: 0,
   marginLeft: '48px',
@@ -33,16 +33,6 @@ const Subtasks = ({ done, todos, onAdd, onCheck, onChange }) => (
     ))}
   </SubtaskContainer>
 )
-
-const TaskInput = styled('input', { type: 'text' })(props => ({
-  border: 0,
-  outline: 'none',
-
-  ':disabled': {
-    background: 'none',
-    border: 0
-  }
-}))
 
 function count(subtasks) {
   const total = subtasks.length

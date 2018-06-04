@@ -9,9 +9,9 @@ export const colors = {
   background: 'white'
 }
 
-export default function styled(Component, attrs) {
+export default function styled(Component, className, attrs) {
   return style => {
-    const StyledComponent = picostyled(Component)(style)
+    const StyledComponent = picostyled(Component, className)(style)
 
     return attrs
       ? (props, children) => <StyledComponent {...attrs} {...props}>{children}</StyledComponent>

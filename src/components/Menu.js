@@ -6,13 +6,13 @@ import withNav from '../utils/withNav'
 import { Title } from './Text'
 
 
-const ItemContainer = styled('li')({
+const ItemContainer = styled('li', 'menu-item')({
   marginBottom: '18px',
   fontSize: '18px',
   fontWeight: 'bold'
 })
 
-const ItemLabel = withNav(styled(Link)(props => ({
+const ItemLabel = withNav(styled(Link, 'menu-item-label')(props => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   height: props.sub ? '27px' : '32px',
@@ -27,7 +27,7 @@ const ItemLabel = withNav(styled(Link)(props => ({
   }
 })))
 
-const ItemList = styled('ul')(props => ({
+const ItemList = styled('ul', 'menu-item-list')(props => ({
   padding: 0,
   margin: 0
 }))
@@ -41,23 +41,23 @@ const Item = ({ to, label, sub, action, class:cs }, children) => (
   </ItemContainer>
 )
 
-const SubItem = styled(Item, { sub: true })({
+const SubItem = styled(Item, 'menu-sub-item', { sub: true })({
   marginBottom: 0,
   fontSize: '15px',
   fontWeight: 'normal'
 })
 
-const MenuContainer = styled('div')({
+const MenuContainer = styled('div', 'menu')({
   width: '180px',
   marginTop: '9px',
   borderRight: '1px solid #EEE'
 })
 
-const AppTitle = styled(Title)({
+const AppTitle = styled(Title, 'app-title')({
   marginLeft: '9px'
 })
 
-const Glyph = styled('p')({
+const Glyph = styled('p', 'glyph')({
   margin: 0,
   padding: 0,
   fontSize: '21px',

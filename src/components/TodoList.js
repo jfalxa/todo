@@ -9,16 +9,16 @@ import TaskInput from './TaskInput'
 import { Title } from './Text'
 import Page from './Page'
 
-const TodoListContainer = styled('div')({
+const TodoListContainer = styled('div', 'list')({
   marginBottom: '27px'
 })
 
-const ListContainer = styled('ul')({
+const ListContainer = styled('ul', 'todo-list')({
   padding: 0,
   margin: 0
 })
 
-const TodoInput = styled(TaskInput)({
+const TodoInput = styled(TaskInput, 'todo-input')({
   marginBottom: '21px',
   fontSize: '18px'
 })
